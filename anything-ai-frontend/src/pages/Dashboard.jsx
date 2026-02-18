@@ -18,7 +18,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetchTasks();
+    // fetchTasks();
   }, []);
 
   const handleAddOrUpdate = async (taskData) => {
@@ -44,23 +44,61 @@ export default function Dashboard() {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.preventDefault()
+    console.log("loggin out")
     localStorage.removeItem("token");
+    
     navigate("/login");
   };
 
   return (
-    <div>
+    <div style={{
+      width:"100vw",
+      height: '100vh',
+      backgroundColor: 'cyan',
+      display:'flex',
+      flexDirection: 'column',
+      gap: '20px',
+      alignItems: 'center',
+      padding: '30px'
+    }} >
       <h2>Dashboard</h2>
-      <button onClick={handleLogout}>Logout</button>
+      <button style={{
+        width: '100px',
+        padding: '8px'
+      }} onClick={handleLogout}>Logout</button>
       <TaskForm onSubmit={handleAddOrUpdate} task={editingTask} onCancel={() => setEditingTask(null)} />
-      <ul>
+      <ul style={{
+        listStyle: 'none',
+        padding: '10px',
+        
+      }} >
         {tasks.map(task => (
-          <li key={task._id}>
-            <h4>{task.title} ({task.status})</h4>
+          <li style={{
+            border: '1px solid brown',
+            padding: '10px',
+            backgroundColor: 'whitesmoke',
+            width: '200px',
+            textAlign: 'center',
+
+          }} key={task._id}>
+            <h4 style={{
+              
+            }} >{task.title} ({task.status})</h4>
             <p>{task.description}</p>
-            <button onClick={() => setEditingTask(task)}>Edit</button>
-            <button onClick={() => handleDelete(task._id)}>Delete</button>
+            <button  style={{
+              padding: '8px 10px 8px 10px',
+              backgroundColor: 'red',
+              marginInline: '15px',
+              marginTop: '14px'
+            }} onClick={() => setEditingTask(task)}>Edit</button>
+            <button style={{
+              padding: '8px 10px 8px 10px',
+              backgroundColor: 'blue',
+              marginInline: '15px',
+              marginTop: '14px'
+            }}  onClick={() => handleDelete(task._id)}>Delete</button>
           </li>
         ))}
       </ul>
